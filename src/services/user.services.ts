@@ -1,5 +1,7 @@
 import User, { UserTypes } from "../models/user.model";
 import * as bcrypt from "bcrypt";
+import { LoginType } from "../types/auth.types";
+import JWT from "jsonwebtoken";
 
 const UserServices = {
   createUser: async (
@@ -11,10 +13,10 @@ const UserServices = {
     try {
       const { email, phone, role, shopNumber } = userData;
       const hashedPassword = await bcrypt.hash(userData.password, 10);
-      const exists = await User.findOne({ email, phone });
+      const exists = await User.findOne({ phone });
       if (exists) {
         return {
-          error: "User with account exists",
+          error: "This account already exists",
         };
       }
 
@@ -49,6 +51,38 @@ const UserServices = {
       return {
         ...rest,
         message: "User account successfully created",
+      };
+    } catch (error) {
+      return {
+        error: (error as Error).message,
+      };
+    }
+  },
+  nonCustomerLogin: async (userData: LoginType) => {
+    try {
+      const { password, phone } = userData;
+      const exists = await User.findOne({ phone });
+      if (!exists || exists.role === "customer") {
+        return {
+          error: "This account is not recognized",
+        };
+      }
+
+      const isPasswordCorrect = await bcrypt.compare(password, exists.password);
+      if (!isPasswordCorrect) {
+        return {
+          error: "Incorrect password",
+        };
+      }
+
+      const user = exists.toJSON();
+      const token = JWT.sign({ id: exists._id }, process.env.JWT_SECRET!, {
+        expiresIn: "2h",
+      });
+
+      return {
+        ...user,
+        token,
       };
     } catch (error) {
       return {

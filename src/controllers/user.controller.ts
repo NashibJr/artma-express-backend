@@ -23,7 +23,7 @@ const UserController = {
         file?.frontNID! && file.frontNID[0].filename
       );
 
-      resp.status(200).json(data);
+      resp.status(201).json(data);
     } catch (error) {
       resp.status(400).json({
         error: (error as Error).message,
@@ -36,6 +36,21 @@ const UserController = {
         params: { image },
       } = req;
       resp.download(`${process.cwd()}/src/profile-images/${image}`);
+    } catch (error) {
+      resp.status(400).json({
+        error: (error as Error).message,
+      });
+    }
+  },
+  nonCustomerLogin: async (
+    req: Request,
+    resp: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const data = await UserServices.nonCustomerLogin(req.body);
+
+      resp.status(200).json(data);
     } catch (error) {
       resp.status(400).json({
         error: (error as Error).message,
