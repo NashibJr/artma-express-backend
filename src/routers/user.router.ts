@@ -15,5 +15,6 @@ UserRouter.post("/create", upload, UserController.create);
 UserRouter.get("/download/:image", UserController.download);
 UserRouter.post("/non-customer/login", UserController.login);
 UserRouter.delete("/delete/:id", UserController.deleteUser);
+UserRouter.put("/update/:id", UserController.updateUser);
 
 export default UserRouter;

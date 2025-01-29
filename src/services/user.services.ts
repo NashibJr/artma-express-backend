@@ -107,6 +107,21 @@ const UserServices = {
       };
     }
   },
+  updateUser: async (userData: UserTypes, userId: string) => {
+    try {
+      const user = await User.findByIdAndUpdate(userId, userData);
+      const { password, ...rest } = user?.toJSON() as UserTypes;
+
+      return {
+        ...rest,
+        message: "Info successfully updates",
+      };
+    } catch (error) {
+      return {
+        error: (error as Error).message,
+      };
+    }
+  },
 };
 
 export default UserServices;
