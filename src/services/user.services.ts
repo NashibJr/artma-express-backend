@@ -1,6 +1,6 @@
 import User, { UserTypes } from "../models/user.model";
 import * as bcrypt from "bcrypt";
-import { LoginType } from "../types/auth.types";
+import { ChangePAsswordTypes, LoginType } from "../types/auth.types";
 import JWT from "jsonwebtoken";
 
 const UserServices = {
@@ -109,12 +109,45 @@ const UserServices = {
   },
   updateUser: async (userData: UserTypes, userId: string) => {
     try {
-      const user = await User.findByIdAndUpdate(userId, userData);
-      const { password, ...rest } = user?.toJSON() as UserTypes;
+      await User.findByIdAndUpdate(userId, userData);
 
       return {
-        ...rest,
         message: "Info successfully updates",
+      };
+    } catch (error) {
+      return {
+        error: (error as Error).message,
+      };
+    }
+  },
+  changePassword: async (
+    newPasswordData: ChangePAsswordTypes,
+    userId: string
+  ) => {
+    try {
+      const user = await User.findById(userId);
+      const { newPassword, oldPassword } = newPasswordData;
+      const isOldPasswordCorrect = await bcrypt.compare(
+        oldPassword,
+        user?.password!
+      );
+      if (!isOldPasswordCorrect) {
+        return {
+          error: "Enter a correct old password",
+        };
+      }
+
+      if (newPassword === oldPassword) {
+        return {
+          error: "Enter a different password",
+        };
+      }
+
+      const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+      await user?.updateOne({ password: hashedNewPassword });
+
+      return {
+        message: "Password successfully changed",
       };
     } catch (error) {
       return {

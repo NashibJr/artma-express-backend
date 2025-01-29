@@ -1,7 +1,8 @@
-import { Router } from "express";
+import { NextFunction, Request, Response, Router } from "express";
 import UserController from "../controllers/user.controller";
 import multer from "multer";
 import storage from "../middlewares/upload.middleware";
+import validate from "../helpers/password.validation";
 
 const UserRouter = Router();
 
@@ -13,8 +14,14 @@ const upload = multer({ storage, limits: { fileSize: 2000000 } }).fields([
 
 UserRouter.post("/create", upload, UserController.create);
 UserRouter.get("/download/:image", UserController.download);
-UserRouter.post("/non-customer/login", UserController.login);
+UserRouter.post("/login", UserController.login);
 UserRouter.delete("/delete/:id", UserController.deleteUser);
 UserRouter.put("/update/:id", UserController.updateUser);
+UserRouter.put(
+  "/change-password/:id",
+  (req: Request, resp: Response, next: NextFunction) =>
+    validate(req, resp, next)(req.body),
+  UserController.changePassword
+);
 
 export default UserRouter;
