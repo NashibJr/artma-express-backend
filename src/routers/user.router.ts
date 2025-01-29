@@ -14,5 +14,6 @@ const upload = multer({ storage, limits: { fileSize: 2000000 } }).fields([
 UserRouter.post("/create", upload, UserController.create);
 UserRouter.get("/download/:image", UserController.download);
 UserRouter.post("/non-customer/login", UserController.login);
+UserRouter.delete("/delete/:id", UserController.deleteUser);
 
 export default UserRouter;

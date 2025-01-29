@@ -94,6 +94,19 @@ const UserServices = {
       };
     }
   },
+  deleteUser: async (userId: string) => {
+    try {
+      await User.findByIdAndDelete(userId);
+
+      return {
+        message: "User successfully deleted",
+      };
+    } catch (error) {
+      return {
+        error: (error as Error).message,
+      };
+    }
+  },
 };
 
 export default UserServices;
