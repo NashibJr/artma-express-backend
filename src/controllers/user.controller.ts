@@ -42,13 +42,13 @@ const UserController = {
       });
     }
   },
-  nonCustomerLogin: async (
+  login: async (
     req: Request,
     resp: Response,
     next: NextFunction
   ): Promise<void> => {
     try {
-      const data = await UserServices.nonCustomerLogin(req.body);
+      const data = await UserServices.login(req.body);
 
       resp.status(200).json(data);
     } catch (error) {

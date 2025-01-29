@@ -11,7 +11,7 @@ const UserServices = {
     backNID: string
   ) => {
     try {
-      const { email, phone, role, shopNumber } = userData;
+      const { phone, role, shopNumber } = userData;
       const hashedPassword = await bcrypt.hash(userData.password, 10);
       const exists = await User.findOne({ phone });
       if (exists) {
@@ -58,11 +58,11 @@ const UserServices = {
       };
     }
   },
-  nonCustomerLogin: async (userData: LoginType) => {
+  login: async (userData: LoginType) => {
     try {
       const { password, phone } = userData;
       const exists = await User.findOne({ phone });
-      if (!exists || exists.role === "customer") {
+      if (!exists) {
         return {
           error: "This account is not recognized",
         };
