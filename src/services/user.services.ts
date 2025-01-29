@@ -60,7 +60,7 @@ const UserServices = {
   },
   login: async (userData: LoginType) => {
     try {
-      const { password, phone } = userData;
+      const { phone } = userData;
       const exists = await User.findOne({ phone });
       if (!exists) {
         return {
@@ -68,7 +68,10 @@ const UserServices = {
         };
       }
 
-      const isPasswordCorrect = await bcrypt.compare(password, exists.password);
+      const isPasswordCorrect = await bcrypt.compare(
+        userData.password,
+        exists.password
+      );
       if (!isPasswordCorrect) {
         return {
           error: "Incorrect password",
@@ -76,12 +79,13 @@ const UserServices = {
       }
 
       const user = exists.toJSON();
+      const { password, ...rest } = user;
       const token = JWT.sign({ id: exists._id }, process.env.JWT_SECRET!, {
         expiresIn: "2h",
       });
 
       return {
-        ...user,
+        ...rest,
         token,
       };
     } catch (error) {
