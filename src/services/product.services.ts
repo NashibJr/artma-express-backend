@@ -57,6 +57,19 @@ const ProductServices = {
       };
     }
   },
+  update: async (productData: ProductTypes, productId: string) => {
+    try {
+      await Product.findByIdAndUpdate(productId, productData);
+
+      return {
+        message: "Product successfully updated",
+      };
+    } catch (error) {
+      return {
+        error: (error as Error).message,
+      };
+    }
+  },
 };
 
 export default ProductServices;

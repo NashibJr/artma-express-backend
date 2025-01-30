@@ -17,5 +17,6 @@ ProductRouter.post("/create", upload, ProductController.create);
 ProductRouter.get("/download/:image", ProductController.download);
 ProductRouter.get("/all", ProductController.getProducts);
 ProductRouter.delete("/delete/:id", ProductController.deleteProduct);
+ProductRouter.put("/update/:id", ProductController.update);
 
 export default ProductRouter;
