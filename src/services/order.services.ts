@@ -16,6 +16,15 @@ const OrderServices = {
       };
     }
   },
+  getOrders: async () => {
+    try {
+      return await Order.find({});
+    } catch (error) {
+      return {
+        error: (error as Error).message,
+      };
+    }
+  },
 };
 
 export default OrderServices;
