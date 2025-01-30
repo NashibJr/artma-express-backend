@@ -14,6 +14,7 @@ export interface UserTypes {
   backNID?: string;
   createdAt?: string;
   updatedAt?: string;
+  active?: boolean;
 }
 
 const userSchema = new Schema<UserTypes>(
@@ -29,6 +30,7 @@ const userSchema = new Schema<UserTypes>(
     frontNID: { type: String, required: false },
     backNID: { type: String, required: false },
     shopNumber: { type: String, required: false },
+    active: { type: Boolean, default: true },
   },
   { timestamps: true }
 );

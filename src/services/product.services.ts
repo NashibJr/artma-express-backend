@@ -1,5 +1,5 @@
 import { ProductTypes } from "../types/product.types";
-import Product from "./product.model";
+import Product from "../models/product.model";
 
 const ProductServices = {
   createProduct: async (
