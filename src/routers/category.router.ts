@@ -12,5 +12,7 @@ const upload = multer({
 
 CategoryRouter.post("/", upload, CategoryController.create);
 CategoryRouter.get("/download/:image", CategoryController.download);
+CategoryRouter.get("/", CategoryController.getCategories);
+CategoryRouter.delete("/:id", CategoryController.deleteCategory);
 
 export default CategoryRouter;

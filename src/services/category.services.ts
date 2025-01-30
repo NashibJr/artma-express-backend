@@ -27,6 +27,30 @@ const CategoryServices = {
       };
     }
   },
+  getCategories: async () => {
+    try {
+      const categories = await Category.find({});
+
+      return categories;
+    } catch (error) {
+      return {
+        error: (error as Error).message,
+      };
+    }
+  },
+  deleteCategory: async (categoryId: string) => {
+    try {
+      await Category.findByIdAndDelete(categoryId);
+
+      return {
+        message: "Category successfully deleted",
+      };
+    } catch (error) {
+      return {
+        error: (error as Error).message,
+      };
+    }
+  },
 };
 
 export default CategoryServices;
