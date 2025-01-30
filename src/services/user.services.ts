@@ -38,12 +38,11 @@ const UserServices = {
         ...userData,
         password: hashedPassword,
         profileImage:
-          imagePath &&
-          `http://localhost:9090/api/v1/users/download/${imagePath}`,
+          imagePath && `${process.env.DEFAULT_URL}/users/download/${imagePath}`,
         backNID:
-          backNID && `http://localhost:9090/api/v1/users/download/${backNID}`,
+          backNID && `${process.env.DEFAULT_URL}/users/download/${backNID}`,
         frontNID:
-          frontNID && `http://localhost:9090/api/v1/users/download/${frontNID}`,
+          frontNID && `${process.env.DEFAULT_URL}/users/download/${frontNID}`,
       });
       const user_ = user.toJSON();
       const { password, ...rest } = user_;

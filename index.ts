@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import { config } from "dotenv";
 import UserRouter from "./src/routers/user.router";
 import CategoryRouter from "./src/routers/category.router";
+import ProductRouter from "./src/routers/product.router";
 
 config();
 
@@ -15,6 +16,7 @@ const main = async () => {
     app.use(express.json(), express.urlencoded({ extended: true }));
     app.use("/api/v1/users", UserRouter);
     app.use("/api/v1/categories", CategoryRouter);
+    app.use("/api/v1/products", ProductRouter);
 
     app.listen(9090, () => console.log("Connected to the server"));
   } catch (error) {

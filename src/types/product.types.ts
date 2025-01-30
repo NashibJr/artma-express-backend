@@ -1,4 +1,19 @@
+import { Schema } from "mongoose";
+
 export interface CategoryTypes {
   name: string;
   image?: string;
+}
+
+export interface ProductTypes extends CategoryTypes {
+  category: Schema<any>;
+  stockQuantity: number;
+  width?: number;
+  height?: number;
+  price: number | string;
+  percentageDisc: string;
+  flashSale: boolean;
+  decription: string;
+  sku: string;
+  images?: string[];
 }

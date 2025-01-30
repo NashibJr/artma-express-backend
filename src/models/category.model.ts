@@ -12,8 +12,23 @@ const categorySchema = new Schema<CategoryTypes>(
       required: true,
     },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    toJSON: {
+      virtuals: true,
+    },
+    toObject: {
+      virtuals: true,
+    },
+  }
 );
+
+categorySchema.virtual("products", {
+  ref: "Product",
+  localField: "_id",
+  foreignField: "category",
+  justOne: true,
+});
 
 const Category = model<CategoryTypes>("Category", categorySchema);
 
