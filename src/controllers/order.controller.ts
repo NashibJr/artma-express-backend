@@ -32,6 +32,25 @@ const OrderController = {
       });
     }
   },
+  update: async (
+    req: Request,
+    resp: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const {
+        params: { id },
+        body,
+      } = req;
+      const data = await OrderServices.update(body, id);
+
+      resp.status(202).json(data);
+    } catch (error) {
+      resp.status(400).json({
+        error: (error as Error).message,
+      });
+    }
+  },
 };
 
 export default OrderController;

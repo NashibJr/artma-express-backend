@@ -25,6 +25,19 @@ const OrderServices = {
       };
     }
   },
+  update: async (data: OrderTypes, orderId: string) => {
+    try {
+      await Order.findByIdAndUpdate(orderId, data);
+
+      return {
+        message: "Order successfully updated",
+      };
+    } catch (error) {
+      return {
+        error: (error as Error).message,
+      };
+    }
+  },
 };
 
 export default OrderServices;
