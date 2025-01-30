@@ -27,6 +27,21 @@ const ProductController = {
   download: (req: Request, resp: Response, next: NextFunction) => {
     resp.download(`${process.cwd()}/src/profile-images/${req.params.image}`);
   },
+  getProducts: async (
+    req: Request,
+    resp: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const data = await ProductServices.getProducts();
+
+      resp.status(200).json(data);
+    } catch (error) {
+      resp.status(400).json({
+        error: (error as Error).message,
+      });
+    }
+  },
 };
 
 export default ProductController;

@@ -15,5 +15,6 @@ const upload = multer({
 
 ProductRouter.post("/create", upload, ProductController.create);
 ProductRouter.get("/download/:image", ProductController.download);
+ProductRouter.get("/all", ProductController.getProducts);
 
 export default ProductRouter;

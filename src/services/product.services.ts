@@ -33,6 +33,17 @@ const ProductServices = {
       };
     }
   },
+  getProducts: async () => {
+    try {
+      const products = await Product.find({});
+
+      return products;
+    } catch (error) {
+      return {
+        error: (error as Error).message,
+      };
+    }
+  },
 };
 
 export default ProductServices;
