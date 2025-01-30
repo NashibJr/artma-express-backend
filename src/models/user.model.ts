@@ -32,8 +32,30 @@ const userSchema = new Schema<UserTypes>(
     shopNumber: { type: String, required: false },
     active: { type: Boolean, default: true },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    toJSON: {
+      virtuals: true,
+    },
+    toObject: {
+      virtuals: true,
+    },
+  }
 );
+
+userSchema.virtual("order", {
+  ref: "Order",
+  localField: "_id",
+  foreignField: "customer",
+  justOne: false,
+});
+
+userSchema.virtual("order", {
+  ref: "Order",
+  localField: "_id",
+  foreignField: "deliverer",
+  justOne: false,
+});
 
 const User = model.model<UserTypes>("User", userSchema);
 
