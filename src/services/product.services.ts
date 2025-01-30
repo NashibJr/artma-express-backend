@@ -44,6 +44,19 @@ const ProductServices = {
       };
     }
   },
+  deleteProduct: async (productId: string) => {
+    try {
+      await Product.findByIdAndDelete(productId);
+
+      return {
+        message: "Product successfully deleted",
+      };
+    } catch (error) {
+      return {
+        error: (error as Error).message,
+      };
+    }
+  },
 };
 
 export default ProductServices;
