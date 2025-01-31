@@ -12,4 +12,5 @@ export interface OrderTypes {
   deliverer?: Schema<UserTypes>;
   amount: string | number;
   status: "pending" | "cancelled" | "fulfilled";
+  shipped?: boolean;
 }

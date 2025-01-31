@@ -38,6 +38,19 @@ const OrderServices = {
       };
     }
   },
+  deleteOrder: async (orderId: string) => {
+    try {
+      await Order.findByIdAndDelete(orderId);
+
+      return {
+        message: "Order successfully deleted",
+      };
+    } catch (error) {
+      return {
+        error: (error as Error).message,
+      };
+    }
+  },
 };
 
 export default OrderServices;

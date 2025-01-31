@@ -29,6 +29,11 @@ const orderSchema = new Schema<OrderTypes>(
       required: true,
       default: "pending",
     },
+    shipped: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
   },
   { timestamps: true }
 );
