@@ -1,10 +1,6 @@
-// export type OrderItemTypes={
-//   product:P
-// }
-
 import { Schema } from "mongoose";
 import { UserTypes } from "../models/user.model";
-
+import { ProductTypes } from "./product.types";
 export interface OrderTypes {
   orderNumber: string | number;
   address?: string;
@@ -14,3 +10,10 @@ export interface OrderTypes {
   status: "pending" | "cancelled" | "fulfilled";
   shipped?: boolean;
 }
+
+export type OrderItemTypes = {
+  product: Schema<ProductTypes>;
+  quantity: number;
+  unitPrice: number;
+  tottalPrice: number;
+};

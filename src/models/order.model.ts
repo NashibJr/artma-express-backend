@@ -14,10 +14,12 @@ const orderSchema = new Schema<OrderTypes>(
     customer: {
       type: Schema.Types.ObjectId,
       required: true,
+      ref: "User",
     },
     deliverer: {
       type: Schema.Types.ObjectId,
       required: false,
+      ref: "User",
     },
     orderNumber: {
       type: String,

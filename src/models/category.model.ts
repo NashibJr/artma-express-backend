@@ -23,7 +23,7 @@ const categorySchema = new Schema<CategoryTypes>(
   }
 );
 
-categorySchema.virtual("products", {
+categorySchema.virtual("product", {
   ref: "Product",
   localField: "_id",
   foreignField: "category",

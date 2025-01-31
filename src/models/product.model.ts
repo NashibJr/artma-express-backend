@@ -10,6 +10,7 @@ const productSchema = new Schema<ProductTypes>(
     category: {
       type: Schema.Types.ObjectId,
       required: true,
+      ref: "Category",
     },
     stockQuantity: {
       type: Number,
@@ -52,6 +53,11 @@ const productSchema = new Schema<ProductTypes>(
     ],
     image: {
       type: String,
+      required: true,
+    },
+    uploader: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
       required: true,
     },
   },

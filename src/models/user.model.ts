@@ -57,6 +57,13 @@ userSchema.virtual("order", {
   justOne: false,
 });
 
+userSchema.virtual("product", {
+  ref: "Product",
+  localField: "_id",
+  foreignField: "uploader",
+  justOne: false,
+});
+
 const User = model.model<UserTypes>("User", userSchema);
 
 export default User;
