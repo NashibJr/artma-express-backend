@@ -37,8 +37,15 @@ const orderSchema = new Schema<OrderTypes>(
       default: false,
     },
   },
-  { timestamps: true }
+  { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
+
+orderSchema.virtual("orderItem", {
+  ref: "OrderItem",
+  localField: "_id",
+  foreignField: "order",
+  justOne: false,
+});
 
 const Order = model<OrderTypes>("Order", orderSchema);
 

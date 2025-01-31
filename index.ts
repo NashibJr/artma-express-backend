@@ -5,6 +5,7 @@ import UserRouter from "./src/routers/user.router";
 import CategoryRouter from "./src/routers/category.router";
 import ProductRouter from "./src/routers/product.router";
 import OrderRouter from "./src/routers/order.router";
+import OrderItemRouter from "./src/routers/orderItem.router";
 
 config();
 
@@ -19,6 +20,7 @@ const main = async () => {
     app.use("/api/v1/categories", CategoryRouter);
     app.use("/api/v1/products", ProductRouter);
     app.use("/api/v1/orders", OrderRouter);
+    app.use("/api/v1/order-items", OrderItemRouter);
 
     app.listen(9090, () => console.log("Connected to the server"));
   } catch (error) {

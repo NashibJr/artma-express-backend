@@ -61,8 +61,19 @@ const productSchema = new Schema<ProductTypes>(
       required: true,
     },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+  }
 );
+
+productSchema.virtual("orderItem", {
+  ref: "OrderItem",
+  localField: "_id",
+  foreignField: "product",
+  justOne: false,
+});
 
 const Product = model<ProductTypes>("Product", productSchema);
 

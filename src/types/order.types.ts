@@ -12,8 +12,9 @@ export interface OrderTypes {
 }
 
 export type OrderItemTypes = {
+  order: Schema<OrderTypes>;
   product: Schema<ProductTypes>;
   quantity: number;
   unitPrice: number;
-  tottalPrice: number;
+  totalPrice: number;
 };
