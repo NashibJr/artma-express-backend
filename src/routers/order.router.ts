@@ -1,10 +1,11 @@
 import { Router } from "express";
 import OrderController from "../controllers/order.controller";
+import handleDeliverer from "../middlewares/update.deliverer";
 
 const OrderRouter = Router();
 
 OrderRouter.post("/", OrderController.create);
 OrderRouter.get("/", OrderController.getOrders);
-OrderRouter.put("/:id", OrderController.update);
+OrderRouter.put("/:id", handleDeliverer, OrderController.update);
 
 export default OrderRouter;
