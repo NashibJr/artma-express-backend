@@ -40,7 +40,7 @@ const orderSchema = new Schema<OrderTypes>(
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
-orderSchema.virtual("orderItem", {
+orderSchema.virtual("orderItems", {
   ref: "OrderItem",
   localField: "_id",
   foreignField: "order",

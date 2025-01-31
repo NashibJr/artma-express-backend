@@ -28,6 +28,6 @@ const orderItemSchema = new Schema<OrderItemTypes>(
   },
   { timestamps: true }
 );
-const OrderItem = model<OrderItemTypes>("orderItem", orderItemSchema);
+const OrderItem = model<OrderItemTypes>("OrderItem", orderItemSchema);
 
 export default OrderItem;

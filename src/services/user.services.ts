@@ -154,6 +154,24 @@ const UserServices = {
       };
     }
   },
+  getUsers: async () => {
+    try {
+      return await User.find({}).populate(["orders", "products"]);
+    } catch (error) {
+      return {
+        error: (error as Error).message,
+      };
+    }
+  },
+  getUser: async (userId: string) => {
+    try {
+      return await User.findById(userId).populate(["orders", "products"]);
+    } catch (error) {
+      return {
+        error: (error as Error).message,
+      };
+    }
+  },
 };
 
 export default UserServices;

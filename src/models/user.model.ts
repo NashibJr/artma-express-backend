@@ -43,21 +43,21 @@ const userSchema = new Schema<UserTypes>(
   }
 );
 
-userSchema.virtual("order", {
+userSchema.virtual("orders", {
   ref: "Order",
   localField: "_id",
   foreignField: "customer",
   justOne: false,
 });
 
-userSchema.virtual("order", {
+userSchema.virtual("orders", {
   ref: "Order",
   localField: "_id",
   foreignField: "deliverer",
   justOne: false,
 });
 
-userSchema.virtual("product", {
+userSchema.virtual("products", {
   ref: "Product",
   localField: "_id",
   foreignField: "uploader",

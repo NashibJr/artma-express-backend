@@ -69,6 +69,24 @@ const OrderController = {
       });
     }
   },
+  getSingleOrder: async (
+    req: Request,
+    resp: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const {
+        params: { id },
+      } = req;
+      const data = await OrderServices.getSingleOrder(id);
+
+      resp.status(200).json(data);
+    } catch (error) {
+      resp.status(400).json({
+        error: (error as Error).message,
+      });
+    }
+  },
 };
 
 export default OrderController;

@@ -18,7 +18,7 @@ const OrderServices = {
   },
   getOrders: async () => {
     try {
-      return await Order.find({});
+      return await Order.find({}).populate(["orderItems"]);
     } catch (error) {
       return {
         error: (error as Error).message,
@@ -45,6 +45,17 @@ const OrderServices = {
       return {
         message: "Order successfully deleted",
       };
+    } catch (error) {
+      return {
+        error: (error as Error).message,
+      };
+    }
+  },
+  getSingleOrder: async (orderId: string) => {
+    try {
+      const order = await Order.findById(orderId).populate(["orderItems"]);
+
+      return order;
     } catch (error) {
       return {
         error: (error as Error).message,

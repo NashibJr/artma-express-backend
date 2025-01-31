@@ -113,6 +113,36 @@ const UserController = {
       });
     }
   },
+  getUsers: async (
+    req: Request,
+    resp: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const data = await UserServices.getUsers();
+
+      resp.status(202).json(data);
+    } catch (error) {
+      resp.status(400).json({
+        error: (error as Error).message,
+      });
+    }
+  },
+  getUser: async (
+    req: Request,
+    resp: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const data = await UserServices.getUser(req.params.id);
+
+      resp.status(202).json(data);
+    } catch (error) {
+      resp.status(400).json({
+        error: (error as Error).message,
+      });
+    }
+  },
 };
 
 export default UserController;

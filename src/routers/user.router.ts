@@ -23,5 +23,7 @@ UserRouter.put(
     validate(req, resp, next)(req.body),
   UserController.changePassword
 );
+UserRouter.get("/all", UserController.getUsers);
+UserRouter.get("/:id", UserController.getUser);
 
 export default UserRouter;
