@@ -64,6 +64,13 @@ userSchema.virtual("products", {
   justOne: false,
 });
 
+userSchema.virtual("notifications", {
+  ref: "Notification",
+  localField: "_id",
+  foreignField: "reciever",
+  justOne: false,
+});
+
 const User = model.model<UserTypes>("User", userSchema);
 
 export default User;

@@ -121,7 +121,7 @@ const UserController = {
     try {
       const data = await UserServices.getUsers();
 
-      resp.status(202).json(data);
+      resp.status(200).json(data);
     } catch (error) {
       resp.status(400).json({
         error: (error as Error).message,
@@ -136,7 +136,7 @@ const UserController = {
     try {
       const data = await UserServices.getUser(req.params.id);
 
-      resp.status(202).json(data);
+      resp.status(200).json(data);
     } catch (error) {
       resp.status(400).json({
         error: (error as Error).message,

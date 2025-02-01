@@ -9,7 +9,7 @@ const categorySchema = new Schema<CategoryTypes>(
     },
     image: {
       type: String,
-      required: true,
+      required: false,
     },
   },
   {
@@ -23,7 +23,7 @@ const categorySchema = new Schema<CategoryTypes>(
   }
 );
 
-categorySchema.virtual("product", {
+categorySchema.virtual("products", {
   ref: "Product",
   localField: "_id",
   foreignField: "category",

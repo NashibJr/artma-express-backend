@@ -156,7 +156,7 @@ const UserServices = {
   },
   getUsers: async () => {
     try {
-      return await User.find({}).populate(["orders", "products"]);
+      return await User.find({});
     } catch (error) {
       return {
         error: (error as Error).message,
@@ -165,7 +165,11 @@ const UserServices = {
   },
   getUser: async (userId: string) => {
     try {
-      return await User.findById(userId).populate(["orders", "products"]);
+      return await User.findById(userId).populate([
+        "orders",
+        "products",
+        "notifications",
+      ]);
     } catch (error) {
       return {
         error: (error as Error).message,
