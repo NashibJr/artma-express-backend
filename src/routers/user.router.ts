@@ -13,7 +13,7 @@ const upload = multer({ storage, limits: { fileSize: 2000000 } }).fields([
   { name: "backNID", maxCount: 1 },
 ]);
 
-UserRouter.post("/create", isAuthenticated, upload, UserController.create);
+UserRouter.post("/create", upload, UserController.create);
 UserRouter.get("/download/:image", isAuthenticated, UserController.download);
 UserRouter.post("/login", UserController.login);
 UserRouter.delete("/delete/:id", isAuthenticated, UserController.deleteUser);
