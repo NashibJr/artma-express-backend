@@ -3,6 +3,7 @@ import UserController from "../controllers/user.controller";
 import multer from "multer";
 import storage from "../middlewares/upload.middleware";
 import validate from "../helpers/password.validation";
+import isAuthenticated from "../middlewares/isAuthenticated";
 
 const UserRouter = Router();
 
@@ -12,18 +13,19 @@ const upload = multer({ storage, limits: { fileSize: 2000000 } }).fields([
   { name: "backNID", maxCount: 1 },
 ]);
 
-UserRouter.post("/create", upload, UserController.create);
-UserRouter.get("/download/:image", UserController.download);
+UserRouter.post("/create", upload, isAuthenticated, UserController.create);
+UserRouter.get("/download/:image", isAuthenticated, UserController.download);
 UserRouter.post("/login", UserController.login);
-UserRouter.delete("/delete/:id", UserController.deleteUser);
-UserRouter.put("/update/:id", UserController.updateUser);
+UserRouter.delete("/delete/:id", isAuthenticated, UserController.deleteUser);
+UserRouter.put("/update/:id", isAuthenticated, UserController.updateUser);
 UserRouter.put(
   "/change-password/:id",
+  isAuthenticated,
   (req: Request, resp: Response, next: NextFunction) =>
     validate(req, resp, next)(req.body),
   UserController.changePassword
 );
-UserRouter.get("/all", UserController.getUsers);
-UserRouter.get("/:id", UserController.getUser);
+UserRouter.get("/all", isAuthenticated, UserController.getUsers);
+UserRouter.get("/:id", isAuthenticated, UserController.getUser);
 
 export default UserRouter;

@@ -53,7 +53,11 @@ const OrderServices = {
   },
   getSingleOrder: async (orderId: string) => {
     try {
-      const order = await Order.findById(orderId).populate(["orderItems"]);
+      const order = await Order.findById(orderId).populate([
+        "orderItems",
+        "customer",
+        "deliverer",
+      ]);
 
       return order;
     } catch (error) {
