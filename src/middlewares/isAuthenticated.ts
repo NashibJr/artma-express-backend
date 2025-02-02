@@ -15,7 +15,7 @@ const isAuthenticated = (
 
     next();
   } catch (error) {
-    return resp.status(400).json({
+    return resp.status(401).json({
       error: (error as Error).message,
     });
   }
