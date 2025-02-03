@@ -7,14 +7,21 @@ import ProductRouter from "./src/routers/product.router";
 import OrderRouter from "./src/routers/order.router";
 import OrderItemRouter from "./src/routers/orderItem.router";
 import NotificationRouter from "./src/routers/notification.router";
+import Cors, { CorsOptions } from "cors";
 
 config();
 
 const app = express();
+const corsConfig = {
+  credentials: true,
+  origin: ["http://localhost:3000"],
+} as CorsOptions;
 
 const main = async () => {
   try {
     await mongoose.connect(process.env.DB_URL!);
+
+    app.use(Cors(corsConfig));
 
     app.use(express.json(), express.urlencoded({ extended: true }));
     app.use("/api/v1/users", UserRouter);
