@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import UserServices from "../services/user.services";
-
+import JWT, { JwtPayload } from "jsonwebtoken";
 interface UploadFields {
   profileImage?: Express.Multer.File[];
   frontNID?: Express.Multer.File[];
@@ -137,6 +137,26 @@ const UserController = {
       const data = await UserServices.getUser(req.params.id);
 
       resp.status(200).json(data);
+    } catch (error) {
+      resp.status(400).json({
+        error: (error as Error).message,
+      });
+    }
+  },
+  getLoggedinUser: async (
+    req: Request,
+    resp: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    interface Iprops extends JwtPayload {
+      id: string;
+    }
+    try {
+      const token = req.headers.authorization?.split(" ")[1];
+      const payload = JWT.verify(token!, process.env.JWT_SECRET!) as Iprops;
+      const user = await UserServices.getUser(payload.id);
+
+      resp.status(200).json(user);
     } catch (error) {
       resp.status(400).json({
         error: (error as Error).message,

@@ -165,11 +165,19 @@ const UserServices = {
   },
   getUser: async (userId: string) => {
     try {
-      return await User.findById(userId).populate([
-        "orders",
-        "products",
-        "notifications",
-      ]);
+      return await User.findById(userId)
+        .populate(["orders", "products", "notifications"])
+        .select([
+          "active",
+          "_id",
+          "fullName",
+          "email",
+          "profileImage",
+          "phone",
+          "address",
+          "nin",
+          "role",
+        ]);
     } catch (error) {
       return {
         error: (error as Error).message,
