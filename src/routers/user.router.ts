@@ -12,6 +12,9 @@ const upload = multer({ storage, limits: { fileSize: 2000000 } }).fields([
   { name: "frontNID", maxCount: 1 },
   { name: "backNID", maxCount: 1 },
 ]);
+const profilePic = multer({ storage, limits: { fileSize: 2000000 } }).single(
+  "profilePic"
+);
 
 UserRouter.get("/loggedin", UserController.getLoggedinUser);
 UserRouter.post("/create", upload, UserController.create);
@@ -28,5 +31,11 @@ UserRouter.put(
 );
 UserRouter.get("/all", isAuthenticated, UserController.getUsers);
 UserRouter.get("/:id", isAuthenticated, UserController.getUser);
+UserRouter.put(
+  "/upload-image/:id",
+  isAuthenticated,
+  profilePic,
+  UserController.uploadProfilePic
+);
 
 export default UserRouter;

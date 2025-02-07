@@ -20,9 +20,17 @@ export interface UserTypes {
 const userSchema = new Schema<UserTypes>(
   {
     fullName: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
+    email: {
+      type: String,
+      required: true,
+      unique: [true, "This email address already exists"],
+    },
     profileImage: { type: String, required: false },
-    phone: { type: String, required: true, unique: true },
+    phone: {
+      type: String,
+      required: true,
+      unique: [true, "An account with this phone number already exists"],
+    },
     address: { type: String, required: false },
     nin: { type: String, required: false },
     password: { type: String, required: true },

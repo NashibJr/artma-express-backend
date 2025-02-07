@@ -111,7 +111,7 @@ const UserServices = {
       await User.findByIdAndUpdate(userId, userData);
 
       return {
-        message: "Info successfully updates",
+        message: "Info successfully updated",
       };
     } catch (error) {
       return {
@@ -154,9 +154,9 @@ const UserServices = {
       };
     }
   },
-  getUsers: async () => {
+  getUsers: async (role: string) => {
     try {
-      return await User.find({});
+      return await User.find({ role });
     } catch (error) {
       return {
         error: (error as Error).message,
@@ -178,6 +178,22 @@ const UserServices = {
           "nin",
           "role",
         ]);
+    } catch (error) {
+      return {
+        error: (error as Error).message,
+      };
+    }
+  },
+  uploadProfilePic: async (imagePath: string, userId: string) => {
+    try {
+      await User.findByIdAndUpdate(userId, {
+        profileImage: `${process.env.DEFAULT_URL}/users/download/${imagePath}`,
+      });
+
+      return {
+        imagePath: `${process.env.DEFAULT_URL}/users/download/${imagePath}`,
+        message: "Profile pic successfully updated",
+      };
     } catch (error) {
       return {
         error: (error as Error).message,
