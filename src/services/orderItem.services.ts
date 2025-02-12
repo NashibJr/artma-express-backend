@@ -4,7 +4,11 @@ import { OrderItemTypes } from "../types/order.types";
 const OrderItemServices = {
   create: async (data: OrderItemTypes) => {
     try {
-      const orderItem = await OrderItem.create(data);
+      const { quantity, unitPrice } = data;
+      const orderItem = await OrderItem.create({
+        ...data,
+        totalPrice: quantity * unitPrice,
+      });
 
       return {
         ...orderItem.toJSON(),

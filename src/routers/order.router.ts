@@ -11,9 +11,10 @@ OrderRouter.put(
   "/:id",
   isAuthenticated,
   handleDeliverer,
-  OrderController.update
+  OrderController.assignDeliverer
 );
 OrderRouter.delete("/:id", isAuthenticated, OrderController.deleteOrder);
 OrderRouter.get("/:id", isAuthenticated, OrderController.getSingleOrder);
+OrderRouter.put("/status/:id", isAuthenticated, OrderController.changeStatus);
 
 export default OrderRouter;

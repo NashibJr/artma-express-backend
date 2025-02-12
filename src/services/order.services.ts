@@ -1,6 +1,10 @@
 import Order from "../models/order.model";
 import { OrderTypes } from "../types/order.types";
 
+interface StatusProps {
+  status: string;
+}
+
 const OrderServices = {
   createOrder: async (orderData: OrderTypes) => {
     try {
@@ -25,7 +29,7 @@ const OrderServices = {
       };
     }
   },
-  update: async (data: OrderTypes, orderId: string) => {
+  assignDeliverer: async (data: OrderTypes, orderId: string) => {
     try {
       await Order.findByIdAndUpdate(orderId, data);
 
@@ -54,12 +58,30 @@ const OrderServices = {
   getSingleOrder: async (orderId: string) => {
     try {
       const order = await Order.findById(orderId).populate([
-        "orderItems",
+        {
+          path: "orderItems",
+          populate: {
+            path: "product",
+          },
+        },
         "customer",
         "deliverer",
       ]);
 
       return order;
+    } catch (error) {
+      return {
+        error: (error as Error).message,
+      };
+    }
+  },
+  changeStatus: async (orderId: string, status: StatusProps) => {
+    try {
+      await Order.findByIdAndUpdate(orderId, { status: status.status });
+
+      return {
+        message: "Order successfully updated",
+      };
     } catch (error) {
       return {
         error: (error as Error).message,

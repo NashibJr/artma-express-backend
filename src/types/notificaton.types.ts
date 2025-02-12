@@ -8,4 +8,6 @@ export interface NotificationTypes {
   status: "read" | "unread";
   title: string;
   body: string;
+  createdAt: string;
+  updatedAt: string;
 }

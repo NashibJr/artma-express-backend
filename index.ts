@@ -8,14 +8,33 @@ import OrderRouter from "./src/routers/order.router";
 import OrderItemRouter from "./src/routers/orderItem.router";
 import NotificationRouter from "./src/routers/notification.router";
 import Cors, { CorsOptions } from "cors";
+import cron from "node-cron";
+import Notification from "./src/models/notification.model";
+import moment from "moment";
 
 config();
 
 const app = express();
 const corsConfig = {
   credentials: true,
-  origin: ["http://localhost:3000"],
+  origin: ["http://localhost:3000", "http://localhost:3001"],
 } as CorsOptions;
+
+(() => {
+  cron.schedule("*/1 * * * *", async () => {
+    try {
+      const notifications = await Notification.find({});
+      const outDatedNotifications = notifications.filter(
+        (notification) => moment().diff(notification.createdAt, "days") > 7
+      );
+      for (let outDatedNotification of outDatedNotifications) {
+        await outDatedNotification.deleteOne();
+      }
+    } catch (error) {
+      console.log(error, "::::");
+    }
+  });
+})();
 
 const main = async () => {
   try {

@@ -35,7 +35,10 @@ const ProductServices = {
   },
   getProducts: async () => {
     try {
-      const products = await Product.find({}).populate(["category"]);
+      const products = await Product.find({}).populate([
+        "category",
+        "uploader",
+      ]);
 
       return products;
     } catch (error) {
@@ -72,7 +75,7 @@ const ProductServices = {
   },
   getSingleProduct: async (productId: string) => {
     try {
-      return Product.findById(productId).populate(["category"]);
+      return Product.findById(productId).populate(["category", "uploader"]);
     } catch (error) {
       return {
         error: (error as Error).message,

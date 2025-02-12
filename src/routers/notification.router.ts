@@ -4,7 +4,7 @@ import isAuthenticated from "../middlewares/isAuthenticated";
 
 const NotificationRouter = Router();
 
-NotificationRouter.post("/", isAuthenticated, NotificationController.create);
+NotificationRouter.post("/", NotificationController.create);
 NotificationRouter.get("/", isAuthenticated, NotificationController.getAll);
 NotificationRouter.put(
   "/:id",

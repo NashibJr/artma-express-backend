@@ -27,11 +27,16 @@ const NotificationServices = {
   },
   markAsRead: async (notificationId: string) => {
     try {
-      await Notification.findByIdAndUpdate(notificationId, { status: "read" });
+      const notification = await Notification.findById(notificationId);
+      if (notification?.status === "read") {
+        return;
+      } else {
+        await notification!.updateOne({ status: "read" });
 
-      return {
-        message: "Notification marked as read",
-      };
+        return {
+          message: "Notification marked as read",
+        };
+      }
     } catch (error) {
       return {
         error: (error as Error).message,

@@ -14,7 +14,7 @@ const notificationSchema = new Schema<NotificationTypes>(
     order: {
       type: Schema.Types.ObjectId,
       ref: "Order",
-      required: true,
+      required: false,
     },
     reciever: {
       type: Schema.Types.ObjectId,
