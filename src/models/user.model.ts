@@ -14,14 +14,23 @@ export interface UserTypes {
   backNID?: string;
   createdAt?: string;
   updatedAt?: string;
+  active?: boolean;
 }
 
 const userSchema = new Schema<UserTypes>(
   {
     fullName: { type: String, required: true },
-    email: { type: String, required: true },
+    email: {
+      type: String,
+      required: true,
+      unique: [true, "This email address already exists"],
+    },
     profileImage: { type: String, required: false },
-    phone: { type: String, required: true },
+    phone: {
+      type: String,
+      required: true,
+      unique: [true, "An account with this phone number already exists"],
+    },
     address: { type: String, required: false },
     nin: { type: String, required: false },
     password: { type: String, required: true },
@@ -29,9 +38,46 @@ const userSchema = new Schema<UserTypes>(
     frontNID: { type: String, required: false },
     backNID: { type: String, required: false },
     shopNumber: { type: String, required: false },
+    active: { type: Boolean, default: true },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    toJSON: {
+      virtuals: true,
+    },
+    toObject: {
+      virtuals: true,
+    },
+  }
 );
+
+userSchema.virtual("orders", {
+  ref: "Order",
+  localField: "_id",
+  foreignField: "customer",
+  justOne: false,
+});
+
+userSchema.virtual("orders", {
+  ref: "Order",
+  localField: "_id",
+  foreignField: "deliverer",
+  justOne: false,
+});
+
+userSchema.virtual("products", {
+  ref: "Product",
+  localField: "_id",
+  foreignField: "uploader",
+  justOne: false,
+});
+
+userSchema.virtual("notifications", {
+  ref: "Notification",
+  localField: "_id",
+  foreignField: "reciever",
+  justOne: false,
+});
 
 const User = model.model<UserTypes>("User", userSchema);
 
