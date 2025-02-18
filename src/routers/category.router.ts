@@ -14,7 +14,7 @@ const upload = multer({
 CategoryRouter.post("/", isAuthenticated, upload, CategoryController.create);
 CategoryRouter.get(
   "/download/:image",
-  isAuthenticated,
+  // isAuthenticated,
   CategoryController.download
 );
 CategoryRouter.get("/", isAuthenticated, CategoryController.getCategories);

@@ -159,7 +159,7 @@ const UserController = {
 
       resp.status(200).json(user);
     } catch (error) {
-      resp.status(401).json({
+      resp.status(400).json({
         error: (error as Error).message,
       });
     }

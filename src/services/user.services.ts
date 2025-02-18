@@ -166,7 +166,16 @@ const UserServices = {
   getUser: async (userId: string) => {
     try {
       return await User.findById(userId)
-        .populate(["orders", "products", "notifications"])
+        .populate([
+          "orders",
+          {
+            path: "products",
+            populate: {
+              path: "category",
+            },
+          },
+          "notifications",
+        ])
         .select([
           "active",
           "_id",

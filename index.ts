@@ -15,6 +15,8 @@ import moment from "moment";
 config();
 
 const app = express();
+app.use("/profile-images", express.static("profile-images"));
+
 const corsConfig = {
   credentials: true,
   origin: ["http://localhost:3000", "http://localhost:3001"],
