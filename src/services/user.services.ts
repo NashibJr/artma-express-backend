@@ -209,6 +209,17 @@ const UserServices = {
       };
     }
   },
+  queryUsers: async (role: string) => {
+    try {
+      const users = await User.find({ role });
+
+      return users;
+    } catch (error) {
+      return {
+        error: (error as Error).message,
+      };
+    }
+  },
 };
 
 export default UserServices;

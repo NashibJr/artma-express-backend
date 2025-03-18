@@ -23,18 +23,20 @@ ProductRouter.post(
   isAuthenticated,
   ProductController.create
 );
-ProductRouter.get(
-  "/download/:image",
-  isAuthenticated,
-  ProductController.download
-);
-ProductRouter.get("/all", isAuthenticated, ProductController.getProducts);
+ProductRouter.get("/download/:image", ProductController.download);
+ProductRouter.get("/all", ProductController.getProducts);
 ProductRouter.delete(
   "/delete/:id",
   isAuthenticated,
   ProductController.deleteProduct
 );
-ProductRouter.put("/update/:id", isAuthenticated, ProductController.update);
-ProductRouter.get("/:id", isAuthenticated, ProductController.getSingleProduct);
+ProductRouter.put(
+  "/update/:id",
+  isAuthenticated,
+  upload,
+  ProductController.update
+);
+ProductRouter.get("/:id", ProductController.getSingleProduct);
+ProductRouter.get("/category/:id", ProductController.productCategories);
 
 export default ProductRouter;

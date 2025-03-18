@@ -7,7 +7,7 @@ export interface CategoryTypes {
 }
 
 export interface ProductTypes extends CategoryTypes {
-  category: Schema<any>;
+  category: Schema<CategoryTypes>;
   stockQuantity: number;
   width?: number;
   height?: number;

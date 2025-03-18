@@ -51,6 +51,19 @@ const CategoryServices = {
       };
     }
   },
+  singleCategory: async (categoryId: string) => {
+    try {
+      const category = await Category.findById(categoryId)
+        .populate(["products"])
+        .exec();
+
+      return category;
+    } catch (error) {
+      return {
+        error: (error as Error).message,
+      };
+    }
+  },
 };
 
 export default CategoryServices;

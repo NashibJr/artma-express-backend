@@ -182,6 +182,22 @@ const UserController = {
       });
     }
   },
+  queryUsers: async (
+    req: Request,
+    resp: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const { query } = req;
+      const data = await UserServices.queryUsers(query?.role as string);
+
+      resp.status(200).json(data);
+    } catch (error) {
+      resp.status(400).json({
+        error: (error as Error).message,
+      });
+    }
+  },
 };
 
 export default UserController;
