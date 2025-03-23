@@ -16,7 +16,7 @@ const profilePic = multer({ storage, limits: { fileSize: 2000000 } }).single(
   "profilePic"
 );
 
-UserRouter.get("/loggedin", UserController.getLoggedinUser);
+UserRouter.get("/loggedin", isAuthenticated, UserController.getLoggedinUser);
 UserRouter.post("/create", upload, UserController.create);
 UserRouter.get("/query", isAuthenticated, UserController.queryUsers);
 UserRouter.get("/download/:image", UserController.download);

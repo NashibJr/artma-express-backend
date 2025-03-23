@@ -13,13 +13,6 @@ const UserServices = {
     try {
       const { phone, role, shopNumber } = userData;
       const hashedPassword = await bcrypt.hash(userData.password, 10);
-      const exists = await User.findOne({ phone });
-      if (exists) {
-        return {
-          error: "This account already exists",
-        };
-      }
-
       if (role === "supplier" && (shopNumber === "" || !shopNumber)) {
         return {
           error: "Shop number required for supplier",
@@ -167,7 +160,12 @@ const UserServices = {
     try {
       return await User.findById(userId)
         .populate([
-          "orders",
+          {
+            path: "orders",
+            populate: {
+              path: "orderItems",
+            },
+          },
           {
             path: "products",
             populate: {
@@ -186,6 +184,9 @@ const UserServices = {
           "address",
           "nin",
           "role",
+          "frontNID",
+          "backNID",
+          "shopNumber",
         ]);
     } catch (error) {
       return {
