@@ -3,7 +3,6 @@ import CategoryController from "../controllers/category.controller";
 import multer from "multer";
 import storage from "../middlewares/upload.middleware";
 import isAuthenticated from "../middlewares/isAuthenticated";
-import canPerformAction from "../middlewares/canPerformAction";
 
 const CategoryRouter = Router();
 
@@ -20,6 +19,6 @@ CategoryRouter.delete(
   isAuthenticated,
   CategoryController.deleteCategory
 );
-CategoryRouter.get("/:id", canPerformAction, CategoryController.singleCategory);
+CategoryRouter.get("/:id", CategoryController.singleCategory);
 
 export default CategoryRouter;
