@@ -27,7 +27,7 @@ categorySchema.virtual("products", {
   ref: "Product",
   localField: "_id",
   foreignField: "category",
-  justOne: true,
+  justOne: false,
 });
 
 const Category = model<CategoryTypes>("Category", categorySchema);

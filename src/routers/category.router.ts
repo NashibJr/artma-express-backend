@@ -12,16 +12,13 @@ const upload = multer({
 }).single("categoryImage");
 
 CategoryRouter.post("/", isAuthenticated, upload, CategoryController.create);
-CategoryRouter.get(
-  "/download/:image",
-  // isAuthenticated,
-  CategoryController.download
-);
-CategoryRouter.get("/", isAuthenticated, CategoryController.getCategories);
+CategoryRouter.get("/download/:image", CategoryController.download);
+CategoryRouter.get("/", CategoryController.getCategories);
 CategoryRouter.delete(
   "/:id",
   isAuthenticated,
   CategoryController.deleteCategory
 );
+CategoryRouter.get("/:id", CategoryController.singleCategory);
 
 export default CategoryRouter;

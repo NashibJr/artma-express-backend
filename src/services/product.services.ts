@@ -60,9 +60,25 @@ const ProductServices = {
       };
     }
   },
-  update: async (productData: ProductTypes, productId: string) => {
+  update: async (
+    productData: ProductTypes,
+    productId: string,
+    imagePath: string,
+    images: string[]
+  ) => {
     try {
-      await Product.findByIdAndUpdate(productId, productData);
+      await Product.findByIdAndUpdate(productId, {
+        ...productData,
+        image:
+          imagePath &&
+          `${process.env.DEFAULT_URL}/products/download/${imagePath}`,
+        images:
+          images &&
+          Array.from(
+            images ?? [],
+            (image) => `${process.env.DEFAULT_URL}/products/download/${image}`
+          ),
+      });
 
       return {
         message: "Product successfully updated",
@@ -76,6 +92,17 @@ const ProductServices = {
   getSingleProduct: async (productId: string) => {
     try {
       return Product.findById(productId).populate(["category", "uploader"]);
+    } catch (error) {
+      return {
+        error: (error as Error).message,
+      };
+    }
+  },
+  categoryProducts: async (category: string) => {
+    try {
+      const products = await Product.find({ category });
+
+      return products;
     } catch (error) {
       return {
         error: (error as Error).message,

@@ -70,7 +70,15 @@ const ProductController = {
         body,
         params: { id },
       } = req;
-      const data = await ProductServices.update(body, id);
+      const files = req.files as {
+        [field: string]: Express.Multer.File[];
+      };
+      const data = await ProductServices.update(
+        body,
+        id,
+        files?.featuredImage && files?.featuredImage[0]?.filename,
+        files?.images && Array.from(files?.images, (item) => item?.filename)
+      );
 
       resp.status(202).json(data);
     } catch (error) {
@@ -89,6 +97,21 @@ const ProductController = {
         params: { id },
       } = req;
       const data = await ProductServices.getSingleProduct(id);
+
+      resp.status(200).json(data);
+    } catch (error) {
+      resp.status(400).json({
+        error: (error as Error).message,
+      });
+    }
+  },
+  productCategories: async (
+    req: Request,
+    resp: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const data = await ProductServices.categoryProducts(req.params.id);
 
       resp.status(200).json(data);
     } catch (error) {

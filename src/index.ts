@@ -1,15 +1,15 @@
 import express from "express";
 import mongoose from "mongoose";
 import { config } from "dotenv";
-import UserRouter from "./src/routers/user.router";
-import CategoryRouter from "./src/routers/category.router";
-import ProductRouter from "./src/routers/product.router";
-import OrderRouter from "./src/routers/order.router";
-import OrderItemRouter from "./src/routers/orderItem.router";
-import NotificationRouter from "./src/routers/notification.router";
+import UserRouter from "./routers/user.router";
+import CategoryRouter from "./routers/category.router";
+import ProductRouter from "./routers/product.router";
+import OrderRouter from "./routers/order.router";
+import OrderItemRouter from "./routers/orderItem.router";
+import NotificationRouter from "./routers/notification.router";
 import Cors, { CorsOptions } from "cors";
 import cron from "node-cron";
-import Notification from "./src/models/notification.model";
+import Notification from "./models/notification.model";
 import moment from "moment";
 
 config();
@@ -19,7 +19,7 @@ app.use("/profile-images", express.static("profile-images"));
 
 const corsConfig = {
   credentials: true,
-  origin: ["http://localhost:3000", "http://localhost:3001"],
+  origin: [process.env.FRONTEND_URL],
 } as CorsOptions;
 
 (() => {

@@ -32,7 +32,11 @@ const userSchema = new Schema<UserTypes>(
       unique: [true, "An account with this phone number already exists"],
     },
     address: { type: String, required: false },
-    nin: { type: String, required: false },
+    nin: {
+      type: String,
+      required: false,
+      unique: [true, "This NIN number already exists"],
+    },
     password: { type: String, required: true },
     role: { type: String, required: true },
     frontNID: { type: String, required: false },
