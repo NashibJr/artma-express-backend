@@ -11,7 +11,7 @@ const UserServices = {
     backNID: string
   ) => {
     try {
-      const { phone, role, shopNumber } = userData;
+      const { role, shopNumber } = userData;
       const hashedPassword = await bcrypt.hash(userData.password, 10);
       if (role === "supplier" && (shopNumber === "" || !shopNumber)) {
         return {

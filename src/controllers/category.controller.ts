@@ -22,7 +22,7 @@ const CategoryController = {
     const {
       params: { image },
     } = req;
-    resp.download(`${process.cwd()}/src/profile-images/${image}`);
+    resp.sendFile(`${process.cwd()}/src/profile-images/${image}`);
   },
   getCategories: async (
     req: Request,

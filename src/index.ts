@@ -52,7 +52,7 @@ const main = async () => {
     app.use("/api/v1/order-items", OrderItemRouter);
     app.use("/api/v1/notifications", NotificationRouter);
 
-    app.listen(9090, () => console.log("Connected to the server"));
+    app.listen(1010, () => console.log("Connected to the server"));
   } catch (error) {
     console.log(error, ">>>");
   }
