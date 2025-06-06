@@ -35,7 +35,7 @@ const userSchema = new Schema<UserTypes>(
     nin: {
       type: String,
       required: false,
-      unique: [true, "This NIN number already exists"],
+      unique: false,
     },
     password: { type: String, required: true },
     role: { type: String, required: true },

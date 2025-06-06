@@ -11,7 +11,15 @@ const UserServices = {
     backNID: string
   ) => {
     try {
-      const { role, shopNumber } = userData;
+      const { role, shopNumber, nin } = userData;
+      if (nin) {
+        const exists = await User.findOne({ nin });
+        if (exists) {
+          return {
+            error: "User with this NIN number already exists",
+          };
+        }
+      }
       const hashedPassword = await bcrypt.hash(userData.password, 10);
       if (role === "supplier" && (shopNumber === "" || !shopNumber)) {
         return {

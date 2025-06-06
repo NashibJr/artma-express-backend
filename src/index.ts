@@ -19,7 +19,7 @@ app.use("/profile-images", express.static("profile-images"));
 
 const corsConfig = {
   credentials: true,
-  origin: [process.env.FRONTEND_URL],
+  origin: ["*"],
 } as CorsOptions;
 
 (() => {
