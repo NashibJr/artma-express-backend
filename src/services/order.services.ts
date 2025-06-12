@@ -88,6 +88,24 @@ const OrderServices = {
       };
     }
   },
+  getUserOrders: async (userId: string) => {
+    try {
+      const orders = await Order.find({ customer: userId }).populate([
+        {
+          path: "orderItems",
+          populate: {
+            path: "product",
+          },
+        },
+      ]);
+
+      return orders;
+    } catch (error) {
+      return {
+        error: (error as Error).message,
+      };
+    }
+  },
 };
 
 export default OrderServices;

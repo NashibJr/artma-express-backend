@@ -102,6 +102,18 @@ const OrderController = {
       });
     }
   },
+  getUserOrders: async (
+    request: Request,
+    response: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const data = await OrderServices.getUserOrders(request.params.id);
+      response.status(200).json(data);
+    } catch (error) {
+      response.status(400).json({ error: (error as Error).message });
+    }
+  },
 };
 
 export default OrderController;

@@ -25,7 +25,7 @@ const ProductController = {
     }
   },
   download: (req: Request, resp: Response, next: NextFunction) => {
-    resp.download(`${process.cwd()}/src/profile-images/${req.params.image}`);
+    resp.sendFile(`${process.cwd()}/src/profile-images/${req.params.image}`);
   },
   getProducts: async (
     req: Request,
