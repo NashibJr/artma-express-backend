@@ -133,13 +133,14 @@ const UserServices = {
       );
       if (!isOldPasswordCorrect) {
         return {
-          error: "Enter a correct old password",
+          error: "That doesn't match your current password.",
         };
       }
 
-      if (newPassword === oldPassword) {
+      const isPasswordSame = await bcrypt.compare(newPassword, user?.password!);
+      if (isPasswordSame) {
         return {
-          error: "Enter a different password",
+          error: "Pick a password you haven’t used before.",
         };
       }
 
