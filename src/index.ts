@@ -11,6 +11,7 @@ import Cors, { CorsOptions } from "cors";
 import cron from "node-cron";
 import Notification from "./models/notification.model";
 import moment from "moment";
+import PaymentRouter from "./routers/payment.router";
 
 config();
 
@@ -51,6 +52,7 @@ const main = async () => {
     app.use("/api/v1/orders", OrderRouter);
     app.use("/api/v1/order-items", OrderItemRouter);
     app.use("/api/v1/notifications", NotificationRouter);
+    app.use("/api/v1/payments", PaymentRouter);
 
     app.listen(1010, () => console.log("Connected to the server"));
   } catch (error) {
