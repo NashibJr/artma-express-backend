@@ -4,6 +4,7 @@ import { nanoid } from "nanoid";
 import {
   OrderRequestProps,
   PaymentRequestProps,
+  PaymentStatusTypes,
   RegisterIPNProps,
   RequestTokenProps,
 } from "../types/payment.types";
@@ -40,7 +41,7 @@ const PaymentController = {
           consumer_secret: process.env.PESAPAL_CONSUMER_SECRET,
         }
       );
-      const { error, token } = response.data;
+      const { error, token, expiryDate } = response.data;
       if (error) {
         resp.status(400).json({
           error: error,
@@ -70,7 +71,7 @@ const PaymentController = {
         "https://pay.pesapal.com/v3/api/Transactions/SubmitOrderRequest",
         {
           amount: req.body.amount,
-          callback_url: "http://localhost:1010/success",
+          callback_url: "https://github.com",
           currency: "UGX",
           description: "Payment for Artma express",
           id: nanoid(20),
@@ -91,8 +92,43 @@ const PaymentController = {
       resp.status(200).json({
         url: orderRequestData.redirect_url,
         trackingId: orderRequestData.order_tracking_id,
+        token,
+        expiryDate,
       });
     } catch (error) {
+      resp.status(400).json({
+        error: (error as Error)?.message,
+      });
+    }
+  },
+  checkPaymentStatus: async (
+    req: Request,
+    resp: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const { trackingId, token } = req.params;
+      console.log(token);
+
+      const response = await axios.get<PaymentStatusTypes>(
+        `https://pay.pesapal.com/v3/api/Transactions/GetTransactionStatus?orderTrackingId=${trackingId}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      const { error, payment_status_description } = response.data;
+      if (error) {
+        resp.status(400).json({
+          error: error.message,
+        });
+
+        return;
+      }
+
+      resp.status(200).json({
+        payment_status_description,
+      });
+    } catch (error) {
+      console.log(error);
+
       resp.status(400).json({
         error: (error as Error)?.message,
       });

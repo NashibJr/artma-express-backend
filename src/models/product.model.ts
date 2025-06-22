@@ -37,6 +37,14 @@ const productSchema = new Schema<ProductTypes>(
       required: true,
       default: false,
     },
+    productColor: {
+      type: String,
+      required: false,
+    },
+    deliveryStatus: {
+      type: String,
+      required: true,
+    },
     decription: {
       type: String,
       required: true,

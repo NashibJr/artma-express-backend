@@ -45,3 +45,26 @@ export interface PaymentRequestProps {
     phone_number: string;
   };
 }
+
+export type PaymentStatusTypes = {
+  payment_method: string;
+  amount: number;
+  created_date: string;
+  confirmation_code: string;
+  order_tracking_id: string;
+  payment_status_description: string;
+  description: string | null;
+  message: string;
+  payment_account: string;
+  status_code: number;
+  merchant_reference: string;
+  account_number: string | null;
+  payment_status_code: string;
+  currency: string;
+  status: string;
+  error: {
+    error_type: string | null;
+    code: string | null;
+    message: string | null;
+  };
+};

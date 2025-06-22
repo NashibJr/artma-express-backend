@@ -19,4 +19,6 @@ export interface ProductTypes extends CategoryTypes {
   images?: string[];
   uploader: Schema<UserTypes>;
   image?: string;
+  productColor?: string;
+  deliveryStatus: string;
 }
