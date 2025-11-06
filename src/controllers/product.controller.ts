@@ -8,14 +8,7 @@ const ProductController = {
     next: NextFunction
   ): Promise<void> => {
     try {
-      const files = req.files as {
-        [field: string]: Express.Multer.File[];
-      };
-      const data = await ProductServices.createProduct(
-        req.body,
-        files?.featuredImage && files?.featuredImage[0]?.filename,
-        files?.images && Array.from(files?.images, (item) => item?.filename)
-      );
+      const data = await ProductServices.createProduct(req.body);
 
       resp.status(201).json(data);
     } catch (error) {

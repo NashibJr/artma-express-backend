@@ -2,11 +2,7 @@ import { ProductTypes } from "../types/product.types";
 import Product from "../models/product.model";
 
 const ProductServices = {
-  createProduct: async (
-    productData: ProductTypes,
-    imagePath: string,
-    images: string[]
-  ) => {
+  createProduct: async (productData: ProductTypes) => {
     try {
       const exists = await Product.findOne({ name: productData.name });
       if (exists) {
@@ -14,14 +10,7 @@ const ProductServices = {
           error: "Product already exists",
         };
       }
-      const product_ = await Product.create({
-        ...productData,
-        image: `${process.env.DEFAULT_URL}/products/download/${imagePath}`,
-        images: Array.from(
-          images ?? [],
-          (image) => `${process.env.DEFAULT_URL}/products/download/${image}`
-        ),
-      });
+      const product_ = await Product.create(productData);
 
       return {
         ...product_.toJSON(),
