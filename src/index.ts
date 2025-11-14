@@ -20,7 +20,7 @@ app.use("/profile-images", express.static("profile-images"));
 
 const corsConfig = {
   credentials: true,
-  origin: ["http://localhost:3000"],
+  origin: ["http://localhost:3000", process.env.FRONTEND_PRODUCTION_URL],
 } as CorsOptions;
 
 (() => {
@@ -54,7 +54,10 @@ const main = async () => {
     app.use("/api/v1/notifications", NotificationRouter);
     app.use("/api/v1/payments", PaymentRouter);
 
-    app.listen(1010, () => console.log("Connected to the server"));
+    const port = process.env.PORT ?? 5000;
+    const host = process.env.HOST ?? "0.0.0.0";
+
+    app.listen(+port, host, () => console.log("Connected to the server"));
   } catch (error) {
     console.log(error, ">>>");
   }

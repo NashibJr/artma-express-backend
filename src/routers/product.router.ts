@@ -12,15 +12,36 @@ const upload = multer({
   limits: { fileSize: 2000000 },
 }).fields([
   { name: "featuredImage", maxCount: 1 },
-  { name: "images", maxCount: 1000 },
+  { name: "images", maxCount: 5 },
 ]);
 
 ProductRouter.post(
   "/create",
-  upload,
+  isAuthenticated,
   (req: Request, resp: Response, next: NextFunction) =>
     canUploadProduct(req, resp, next)(req.body.uploader),
-  isAuthenticated,
+  async (req: Request, res: Response, next: NextFunction) => {
+    upload(req, res, function (err) {
+      if (err instanceof multer.MulterError) {
+        if (err.code === "LIMIT_FILE_SIZE") {
+          return res.status(400).json({
+            error: "File is too large. Max size is 2MB.",
+          });
+        }
+
+        return res.status(400).json({
+          error: err.message,
+        });
+      } else if (err) {
+        return res.status(500).json({
+          error: "Something went wrong while uploading the file.",
+        });
+      }
+
+      next();
+    });
+  },
+
   ProductController.create
 );
 ProductRouter.get("/download/:image", ProductController.download);
